@@ -7,21 +7,21 @@
         mc:Ignorable="d"
         Title="Create Search Form" Height="450" Width="837">
 	<Grid>
-		<GroupBox x:Name="gpSource" Header="Source" HorizontalAlignment="Left" Height="291" Margin="10,10,0,0" VerticalAlignment="Top" Width="405">
+		<GroupBox x:Name="gpTarget" Header="Target" HorizontalAlignment="Left" Height="291" Margin="10,10,0,0" VerticalAlignment="Top" Width="405">
 			<WrapPanel>
 				<Label x:Name="lbTrgConnStr" Margin="10,10,0,0" Content="Connection String" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="366"/>
 				<TextBox x:Name="txtTargetConnString" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Width="351"/>
-				<Label x:Name="lbTrgMlsReg" Margin="10,10,0,0" Content="Region ID"/>
+				<Label x:Name="lbTrgMlsReg" Margin="10,10,0,0" Content="Region ID*"/>
 				<TextBox x:Name="txtTargetRegionId" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Width="351"/>
 				<Label x:Name="lbTrgMlsRegName" Margin="10,10,0,0" Content="Region Name"/>
 				<TextBox x:Name="txtTargetRegionName" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Width="351"/>
 			</WrapPanel>
 		</GroupBox>
-		<GroupBox x:Name="gpTarget" Header="Target" HorizontalAlignment="Left" Height="291" Margin="420,10,0,0" VerticalAlignment="Top" Width="399">
+		<GroupBox x:Name="gpSource" Header="Source" HorizontalAlignment="Left" Height="291" Margin="420,10,0,0" VerticalAlignment="Top" Width="399">
 			<WrapPanel>
-				<Label x:Name="lbSrcConnStr" Margin="10,10,0,0" Content="Connection String" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="366"/>
+				<Label x:Name="lbSrcConnStr" Margin="10,10,0,0" Content="Connection String*" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="366"/>
 				<TextBox x:Name="txtSrcConnString" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Width="351"/>
-				<Label x:Name="lbSrcMlsReg" Margin="10,10,0,0" Content="Region ID"/>
+				<Label x:Name="lbSrcMlsReg" Margin="10,10,0,0" Content="Region ID*"/>
 				<TextBox x:Name="txtSrcRegionId" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Width="351"/>
 				<Label x:Name="lbSrcMlsRegName" Margin="10,10,0,0" Content="Region Name"/>
 				<TextBox x:Name="txtSrcRegionName" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Width="351"/>

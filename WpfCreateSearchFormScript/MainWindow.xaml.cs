@@ -58,20 +58,35 @@ namespace WpfCreateSearchFormScript
 
 		private void BtSave_Click(object sender, RoutedEventArgs e)
 		{
-			using (var scriptGen = GetGenerator())
+			try
 			{
-				if (scriptGen == null)
+				btSave.IsEnabled = txtSrcConnString.IsEnabled = txtSrcRegionId.IsEnabled = txtSrcRegionName.IsEnabled = 
+					txtTargetConnString.IsEnabled = txtTargetRegionId.IsEnabled = txtTargetRegionName.IsEnabled = false;
+				using (var scriptGen = GetGenerator())
 				{
-					return;
+					if (scriptGen == null)
+					{
+						return;
+					}
+					var saveFileDialog = new SaveFileDialog();
+					saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+					saveFileDialog.Filter = "SQL file (*.sql)|*.sql";
+					var res = saveFileDialog.ShowDialog();
+					if (res.HasValue && res.Value)
+					{
+						scriptGen.Generate();
+						File.WriteAllText(saveFileDialog.FileName, scriptGen.ToString());
+					}
 				}
-				var saveFileDialog = new SaveFileDialog();
-				saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-				saveFileDialog.Filter = "SQL file (*.sql)|*.sql";
-				if (saveFileDialog.ShowDialog() == true)
-				{
-					scriptGen.Generate();
-					File.WriteAllText(saveFileDialog.FileName, scriptGen.ToString());
-				}
+			}
+			catch
+			{
+
+			}
+			finally
+			{
+				btSave.IsEnabled = txtSrcConnString.IsEnabled = txtSrcRegionId.IsEnabled = txtSrcRegionName.IsEnabled =
+					txtTargetConnString.IsEnabled = txtTargetRegionId.IsEnabled = txtTargetRegionName.IsEnabled = true;
 			}
 		}
 	}
