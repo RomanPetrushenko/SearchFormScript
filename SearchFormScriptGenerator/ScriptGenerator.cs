@@ -45,7 +45,7 @@ namespace SearchFormScriptGenerator
 				return;
 			}
 
-
+			builder.AppendLine(GetSearchGroups(withCheckFeatures));
 		}
 
 		public override string ToString()
@@ -115,6 +115,45 @@ namespace SearchFormScriptGenerator
 			}
 
 			return SqlTextGenerator.InsertQueryGenerate(entities);
+		}
+
+		private string GetSearchGroups(bool withCheckFeatures)
+		{
+			if (withCheckFeatures && string.IsNullOrEmpty(_targetSqlConStr))
+			{
+				throw new ArgumentNullException("For mode \"Check Features\" need set Target Connection String");
+			}
+			StringBuilder builder = new StringBuilder();
+			var entities = SqlHelper<SearchFeatureGroup>.List(_sourceSqlConStr, SourceMlsRegion.MlsRegionId);
+			var searchFeatures = SqlHelper<SearchFeature>.List(_sourceSqlConStr, SourceMlsRegion.MlsRegionId);
+			if (entities == null || entities.Count() == 0)
+			{
+				return string.Empty;
+			}
+
+			var exEnt = entities.First();
+			int order = 1;
+			foreach (var entity in entities)
+			{
+				entity.MLSRegion_ID = TargetMlsRegion.MlsRegionId;
+				entity.Order = order;
+				order++;
+			}
+
+			var nameVariable = $"@{exEnt.GetGroupNameForVariable()}ID";
+			builder.AppendLine(SqlTextGenerator.DeclareVariableInt(nameVariable));
+			builder.AppendLine();
+			builder.AppendLine(SqlTextGenerator.SetVariableInt(nameVariable));
+			builder.AppendLine();
+			foreach(var entity in entities)
+			{
+				builder.AppendLine(SqlTextGenerator.InsertQueryGenerate(new SearchFeatureGroup[] { entity }));
+				var srchFeatures = searchFeatures.Where(x => x.SearchFormFeatureGroup_ID == entity.ID + "");
+				builder.AppendLine();
+				builder.AppendLine(SqlTextGenerator.InsertQueryGenerate(srchFeatures));
+				builder.AppendLine();
+			}
+			return builder.ToString();
 		}
 
 		#endregion
